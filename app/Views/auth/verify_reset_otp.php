@@ -22,11 +22,18 @@
             background-color: #fef3c7;
             border: 1px solid #f59e0b;
             color: #92400e;
-            padding: 8px 12px;
+            padding: 8px 14px;
             border-radius: 8px;
             font-size: 13px;
-            margin-bottom: 15px;
+            margin: 14px 0 16px 0;
             display: inline-block;
+        }
+        .code-input-container {
+            margin: 24px 0 16px 0;
+        }
+        .form-subtitle {
+            margin-bottom: 8px;
+            line-height: 1.5;
         }
         .resend-btn-action {
             background: none;

@@ -32,11 +32,22 @@
         .info-box {
             background-color: #fdf2f7;
             border-left: 4px solid #b16b8e;
-            padding: 12px 16px;
-            border-radius: 8px;
+            padding: 14px 18px;
+            border-radius: 10px;
             font-size: 14px;
             color: #6b7280;
-            margin-bottom: 8px;
+            margin-top: 20px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            line-height: 1.5;
+            box-sizing: border-box;
+        }
+        .info-box i {
+            font-size: 20px;
+            color: #b16b8e;
+            flex-shrink: 0;
         }
     </style>
 </head>
@@ -80,7 +91,8 @@
                 </div>
 
                 <div class="info-box">
-                    <i class="bi bi-info-circle me-1"></i> Kode OTP 5-digit akan dikirimkan untuk memastikan kepemilikan akun Anda.
+                    <i class="bi bi-info-circle"></i>
+                    <span>Kode OTP 5-digit akan dikirimkan untuk memastikan kepemilikan akun Anda.</span>
                 </div>
 
                 <!-- Tombol Kirim -->
