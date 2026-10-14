@@ -1,0 +1,303 @@
+
+/* Mengatur font, latar belakang, dan layout utama */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f5f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container utama untuk layout 2 kolom */
+.login-container {
+    display: flex;
+    flex-direction: column; /* mobile: stacked */
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+}
+
+/* Penyesuaian untuk tampilan desktop (lebar > 1024px) */
+@media (min-width: 1024px) {
+    .login-container {
+        flex-direction: row;
+    }
+}
+
+/* Panel kiri: Gambar dan gradasi (hanya terlihat di desktop) */
+.left-panel {
+    display: none; /* mobile hide */
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(124deg, #d49cb2 0%, #f7d6e0 100%);
+    position: relative;
+}
+
+@media (min-width: 1024px) {
+    .left-panel {
+        display: flex;
+        width:45%;
+        height: 100vh;
+    }
+}
+
+.login-image {
+    width: 80%;
+    height: auto;
+}
+
+/* Panel kanan: Formulir Login */
+.right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+/* Penyesuaian padding untuk desktop */
+@media (min-width: 1024px) {
+    .right-panel {
+        padding: 5vh 5vw;
+    }
+}
+
+/* Konten formulir */
+.form-content {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Judul dan subjudul */
+.form-title {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 600;
+  color: #b16b8e;
+  text-align: left;
+  margin: 0;
+}
+
+.form-subtitle {
+  font-size: clamp(16px, 2vw, 18px);
+  font-weight: 500;
+  color: #586166;
+  text-align: left;
+  margin: 0;
+}
+@media (min-width: 640px) {
+    .form-title {
+        font-size: 32px;
+    }
+}
+
+  .back-link {
+            font-size: 16px;
+            font-weight: 500;
+            color: #586166;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+}
+
+
+.code-input-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        .code-input-box {
+            width: 45px;
+            height: 55px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #b16b8e;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f8f8f8;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        .code-input-box:focus {
+            border-color: #b16b8e;
+            box-shadow: 0 0 0 2px rgba(177, 107, 142, 0.5);
+        }
+
+        .resend-text {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 16px;
+            color: #586166;
+        }
+
+        .resend-link {
+            font-weight: 700;
+            color: #b16b8e;
+            text-decoration: none;
+        }
+
+        .resend-link:hover {
+            text-decoration: underline;
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 9999px;
+            background-color: #b16b8e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            margin-top: 16px;
+            color: #fff;
+            font-weight: 500;
+            font-size: 18px;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .submit-button:hover {
+            background-color: #a05f80;
+}
+@media (min-width: 640px) {
+    .label-text {
+        font-size: 16px;
+    }
+}
+
+.required {
+    color: #f21d2f;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+.input-field:focus {
+    border-color: #b16b8e;
+    box-shadow: 0 0 0 2px rgba(177, 107, 142, 0.5);
+}
+/* Tombol Verifikasi */
+.submit-button {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: #b16b8e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    margin-top: 16px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 18px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.submit-button:hover {
+    background-color: #a05f80;
+}
+
+/* Opsi Login Lain */
+.divider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.divider span {
+    flex-shrink: 0;
+    background-color: #ffffff;
+    padding: 0 16px;
+    color: #586166;
+    font-size: 14px;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex-grow: 1;
+    height: 1px;
+    background-color: #ccc;
+}
+
+/* Tombol login sosial media */
+.social-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+.social-button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.social-button:hover {
+    background-color: #f7f5f7;
+}
+
+.social-button span {
+    color: #586166;
+    font-weight: 500;
+}
+
+.social-button img,
+.social-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Teks belum punya akun */
+.register-text {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 16px;
+    color: #586166;
+}
+
+.register-link {
+    font-weight: 400;
+    color: #b16b8e;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+.noted-text {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 16px;
+    color: #586166;
+}

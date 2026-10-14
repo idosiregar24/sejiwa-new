@@ -1,0 +1,29 @@
+/writable/logs/
+/writable/cache/
+*.log
+writable/logs/
+
+# Ignore environment file
+.env
+
+# Ignore writable files
+/writable/*
+!/writable/index.html
+
+# Ignore debugbar json files
+writable/debugbar/*.json
+
+/public/ci_sessions/
+
+# Ignore uploaded files
+/public/uploads/profile_photo/*
+!/public/uploads/profile_photo/.gitkeep
+/public/uploads/thumbnail/*
+!/public/uploads/thumbnail/.gitkeep
+/public/uploads/video/*
+!/public/uploads/video/.gitkeep
+
+# Ignore composer vendor
+/vendor/
+.phpunit.result.cache
+

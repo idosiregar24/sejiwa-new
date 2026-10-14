@@ -1,0 +1,230 @@
+/* Mengatur font, latar belakang, dan layout utama agar memenuhi seluruh layar */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f5f7;
+  min-height: 100vh;
+  min-width: 100vw;
+  /* Hapus flex centering agar konten mulai dari atas */
+  display: block; 
+}
+
+/* Container utama untuk layout 2 kolom tanpa bingkai */
+.register-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #ffffff;
+  border-radius: 0;
+  box-shadow: none;
+  padding-top: 80px;
+  overflow: auto;  
+}
+
+.register-image {
+  width: 80%;
+  height: auto;
+}
+
+/* Kolom kanan untuk formulir */
+.right-panel {
+  flex: 1;
+  padding: 40px 20px; /* kasih padding atas lebih besar */
+  box-sizing: border-box;
+  display: block; 
+  height: auto;
+  overflow-y: auto; /* scroll normal */
+}
+
+/* Bagian form dalam kolom kanan */
+.form-content {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 75px;
+}
+
+/* Judul dan subjudul */
+.form-title {
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 600;
+  color: #b16b8e;
+  text-align: left;
+  margin: 0 auto;
+}
+
+.form-subtitle {
+  font-size: clamp(16px, 2vw, 18px);
+  font-weight: 500;
+  color: #586166;
+  text-align: left;
+  margin: 0;
+}
+
+/* Grup input form */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.label-text {
+  font-weight: 500;
+  color: #586166;
+  font-size: clamp(14px, 1.5vw, 18px);
+}
+
+.required {
+  color: #f21d2f;
+}
+
+.input-field {
+  display: flex;
+  width: 100%;
+  padding: 1.5vh 2vw;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.input-field input,
+.date-of-birth-group select {
+  width: 100%;
+  font-size: clamp(14px, 1.5vw, 16px);
+  padding: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+}
+
+.date-of-birth-group {
+  display: flex;
+  gap: 10px;
+}
+
+.date-of-birth-group select {
+  flex: 1;
+  padding: 16px 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="%23b16b8e" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 15px;
+  appearance: none;
+}
+
+/* Indikator password */
+.password-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.constraint-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.check-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.check-text {
+  font-size: clamp(10px, 1vw, 12px);
+  color: #586166;
+}
+
+/* Checkbox syarat dan ketentuan */
+.terms-and-conditions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: clamp(9px, 1vw, 11px);
+  width: 100%;
+  margin-top: 10px;
+}
+
+.terms-and-conditions input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+}
+
+.terms-text {
+  margin: 0;
+}
+
+.terms-link {
+  font-weight: 700;
+  color: #b16b8e;
+  text-decoration: none;
+}
+
+/* Tombol daftar */
+.submit-button {
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 50px;
+  background-color: #b16b8e;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  margin-top: 15px;
+  color: #fff;
+  font-weight: 500;
+  font-size: clamp(16px, 2vw, 18px);
+}
+
+.login-text {
+  width: 100%;
+  text-align: center;
+  font-size: clamp(20px, 1.2vw, 12px);
+  margin-top: 1px;
+  color: #586166;
+}
+
+.login-link {
+  color: #b16b8e;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+
+
+/* Atur body untuk mobile */
+@media (max-width: 768px) {
+  body {
+    display: block; /* hentikan flex centering */
+    min-height: 150vh;
+  }
+
+  .register-container {
+    flex-direction: column;
+    width: 100vw;
+    height: auto;      /* ikuti tinggi konten */
+    min-height: 100vh; /* minimal setinggi layar */
+  }
+
+  .left-panel {
+    display: none;
+  }
+
+  .right-panel {
+    justify-content: flex-start; /* mulai dari atas */
+    align-items: center;
+    padding: 30px 5vw;
+    height: auto;
+    overflow-y: visible; /* scroll muncul hanya bila perlu */
+  }
+}
+

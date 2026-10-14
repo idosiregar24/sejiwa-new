@@ -1,0 +1,99 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f7f9fc;
+}
+
+.content {
+  margin-left: 250px;   /* sesuaikan lebar sidebar */
+  padding: 20px;
+  min-height: 100vh;
+  width: calc(100% - 250px); /* Biar sisanya penuh */
+  background: #f9f9f9;
+}
+
+.content-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    border-radius: 1rem;
+}
+.ck-editor__editable_inline {
+    min-height: 250px;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    border: 1px solid #d1d5db;
+}
+.file-upload-box {
+    border: 2px dashed #d1d5db;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.file-upload-box:hover {
+    background-color: #f9fafb;
+}
+.upload-icon {
+    color: #9ca3af;
+}
+.notif {
+    font-size: 1.5rem;
+    color: #4b5563;
+}
+
+.file-upload-box {
+  position: relative;
+  min-height: 180px;
+  border: 2px dashed #d1d5db;
+  background: #fafafa;
+  transition: border-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.file-upload-box:hover {
+  border-color: #b16b8e;
+}
+
+.file-upload-box .upload-icon {
+  color: #b1b1b1;
+}
+
+.file-upload-box .preview-img {
+  max-height: 160px;
+  max-width: 120px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  background: #fff;
+  object-fit: cover;
+  margin: auto;
+  display: block;
+  transition: box-shadow 0.2s;
+}
+
+.file-upload-box .remove-preview {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.8);
+  border: none;
+  border-radius: 50%;
+  padding: 4px 7px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #b16b8e;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  z-index: 2;
+  display: none;
+}
+
+.file-upload-box:hover .remove-preview {
+  display: block;
+}
+    

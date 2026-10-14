@@ -1,0 +1,110 @@
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    width: 240px;
+    height: 98vh;
+    background: #fff;
+    border-right: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 10px;
+}
+
+.sidebar h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #a55c7d;
+    margin-bottom: 30px;
+    padding-left: 15px;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.menu li {
+    margin: 15px 0;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.menu a i {
+    font-size: 18px;
+    margin-right: 12px;
+}
+
+.menu a.active {
+    background: #a55c7d;
+    color: #fff;
+    font-weight: 600;
+}
+
+.menu a:hover {
+    background: #f2e6ec;
+    color: #a55c7d;
+}
+
+/* User Info */
+.user-profile {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+}
+
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-info {
+    flex-grow: 1;
+}
+
+.user-info h4 {
+    margin: 0;
+    font-size: 14px;
+}
+
+.user-info p {
+    margin: 0;
+    font-size: 12px;
+    color: #888;
+}
+
+.logout {
+    font-size: 20px;
+    cursor: pointer;
+    color: #a55c7d;
+}
+
+.title-navbar{
+    font-weight: 800;
+}
+
+h3{
+    font-weight: 800;
+}

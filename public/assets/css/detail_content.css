@@ -1,0 +1,130 @@
+/* HERO SECTION */
+.hero {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+}
+
+/* Overlay gradasi di atas thumbnail */
+.hero .overlay {
+  background: linear-gradient( #B16B8E);
+  z-index: 1;
+}
+
+/* Konten hero (judul, tombol, dsb) */
+.hero-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  color: #fff;
+}
+
+.hero-content h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+
+.hero-content p {
+  font-size: .9rem;
+}
+
+/* Tombol Play & Watchlist */
+.hero-content .btn {
+  font-weight: 600;
+  transition: all .3s ease-in-out;
+}
+
+.hero-content .btn-outline-light:hover {
+  background-color: #fff;
+  color: #5c0066;
+}
+
+.hero-content .btn-light:hover {
+  background-color: #f8f9fa;
+  color: #5c0066;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Bagian like & share */
+.hero-content .share-btn,
+.hero-content .like-btn {
+  font-size: .9rem;
+  opacity: .9;
+  transition: opacity .3s ease-in-out;
+}
+
+.hero-content .share-btn:hover,
+.hero-content .like-btn:hover {
+  opacity: 1;
+}
+
+
+/* Title Content */
+.title-content {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-bottom: .5rem;
+}
+
+/* Video Player */
+#video-section video {
+  object-fit: cover;
+}
+
+/* CARD STYLE */
+.card-custom {
+  border: none;
+  border-radius: .75rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.card-custom:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+/* Untuk image di card video */
+.card-img-top-video {
+  height: 150px;
+  object-fit: cover;
+}
+
+/* Cast images (rounded) */
+.cast-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 2px solid #eee;
+}
+
+/* Artikel & Infografis */
+.article-card-img-main {
+  height: 250px;
+  object-fit: cover;
+}
+
+.infografis-card-img {
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Responsive tweak */
+@media (max-width: 768px) {
+  .hero {
+    height: 300px;
+  }
+
+  .hero-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero-content .btn {
+    padding: .4rem 1rem;
+    font-size: .85rem;
+  }
+}
