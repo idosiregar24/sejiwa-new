@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Educational Management - Konten Edukasi</title>
+  <title>Educational Management - Sejiwa Admin</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="<?= base_url('assets/css/layoutsCss/sidebar_admin.css') ?>">
   <link rel="stylesheet" href="<?= base_url('assets/css/admin/content-management.css') ?>">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <!-- Google Fonts - Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Google Fonts - Inter & Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- Sidebar -->
@@ -17,7 +19,7 @@
 
   <div class="content">
     <!-- Header -->
-    <header class="text-white d-flex justify-content-between align-items-center py-4 px-4 rounded-bottom shadow" style="background-color: #b9226eff;">
+    <header class="text-white d-flex justify-content-between align-items-center py-3 py-md-4 px-3 px-md-4 rounded-bottom shadow flex-wrap gap-2" style="background-color: #b9226eff;">
       <div class="d-flex align-items-center gap-3">
         <h1 class="fs-4 fw-semibold mb-0">Educational Management</h1>
       </div>
@@ -27,7 +29,7 @@
       </div>
     </header>
 
-    <main class="container-fluid my-4 px-4">
+    <main class="container-fluid my-3 my-md-4 px-2 px-md-4">
       <!-- Title -->
       <div class="mb-3">
         <h3 class="mb-1">Konten Edukasi</h3>
@@ -35,7 +37,7 @@
       </div>
 
       <!-- Statistik -->
-      <div class="row mb-4">
+      <div class="row mb-3">
         <?php
           $statList = [
             ['label' => 'Total Konten', 'value' => $stats['total'] ?? 0],
@@ -45,11 +47,11 @@
           ];
           foreach ($statList as $stat):
         ?>
-        <div class="col-md-3 mb-2">
+        <div class="col-6 col-md-3 mb-2">
           <div class="card text-center">
-            <div class="card-body">
-              <h4 class="mb-0"><?= $stat['value'] ?></h4>
-              <p class="text-muted"><?= $stat['label'] ?></p>
+            <div class="card-body p-3">
+              <h4 class="mb-0 fs-5"><?= $stat['value'] ?></h4>
+              <p class="text-muted mb-0 small"><?= $stat['label'] ?></p>
             </div>
           </div>
         </div>
@@ -58,75 +60,71 @@
 
       <!-- Search + Action -->
       <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-      <input type="text" class="form-control w-auto" style="min-width:200px;" placeholder="Search..." aria-label="Search Konten">
+        <input type="text" id="searchInput" class="form-control flex-grow-1 flex-md-grow-0" style="min-width:200px; max-width:300px;" placeholder="Search..." aria-label="Search Konten">
 
-      <form method="get" action="<?= base_url('content-management') ?>" 
-          class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <form method="get" action="<?= base_url('content-management') ?>" class="d-flex flex-wrap align-items-center gap-2 mb-0">
+          <!-- Filter Jenis Konten -->
+          <select name="jenis" id="filterKonten" class="form-select w-auto" onchange="this.form.submit()">
+            <option value="all" <?= ($jenis == 'all' ? 'selected' : '') ?>>Semua Jenis</option>
+            <option value="artikel" <?= ($jenis == 'artikel' ? 'selected' : '') ?>>Artikel</option>
+            <option value="video" <?= ($jenis == 'video' ? 'selected' : '') ?>>Video</option>
+            <option value="infografis" <?= ($jenis == 'infografis' ? 'selected' : '') ?>>Infografis</option>
+            <option value="audio" <?= ($jenis == 'audio' ? 'selected' : '') ?>>Audio</option>
+          </select>
 
-      <div class="d-flex gap-2">
-        <!-- Filter Jenis Konten -->
-        <select name="jenis" class="form-select w-auto" onchange="this.form.submit()">
-          <option value="all" <?= ($jenis == 'all' ? 'selected' : '') ?>>Semua Jenis</option>
-          <option value="artikel" <?= ($jenis == 'artikel' ? 'selected' : '') ?>>Artikel</option>
-          <option value="video" <?= ($jenis == 'video' ? 'selected' : '') ?>>Video</option>
-          <option value="infografis" <?= ($jenis == 'infografis' ? 'selected' : '') ?>>Infografis</option>
-          <option value="audio" <?= ($jenis == 'audio' ? 'selected' : '') ?>>Audio</option>
-        </select>
+          <!-- Filter Status -->
+          <select name="status" class="form-select w-auto" onchange="this.form.submit()">
+            <option value="all" <?= ($status == 'all' ? 'selected' : '') ?>>Semua Status</option>
+            <option value="draft" <?= ($status == 'draft' ? 'selected' : '') ?>>Draft</option>
+            <option value="published" <?= ($status == 'published' ? 'selected' : '') ?>>Published</option>
+          </select>
 
-        <!-- Filter Status -->
-        <select name="status" class="form-select w-auto" onchange="this.form.submit()">
-          <option value="all" <?= ($status == 'all' ? 'selected' : '') ?>>Semua Status</option>
-          <option value="draft" <?= ($status == 'draft' ? 'selected' : '') ?>>Draft</option>
-          <option value="published" <?= ($status == 'published' ? 'selected' : '') ?>>Published</option>
-        </select>
-
-        <a href="<?= base_url('/content/content_form') ?>" class="btn btn-primary">+ Tambah Konten</a>
+          <a href="<?= base_url('/content/content_form') ?>" class="btn btn-primary text-nowrap">+ Tambah Konten</a>
+        </form>
       </div>
-    </form>
 
-    </div>
-
-
-      <!-- Table -->
-      <div class="card">
+      <!-- Table Responsif -->
+      <div class="card shadow-sm">
         <div class="card-body p-0">
-          <table class="table table-striped mb-0">
-            <thead class="table-light">
-              <tr>
-                <th>Judul</th>
-                <th>Jenis</th>
-                <th>Kategori</th>
-                <th>Status</th>
-                <th>Tanggal</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php if (!empty($contents)): ?>
-                <?php foreach ($contents as $c): ?>
-                  <tr>
-                    <td><?= esc($c['title']) ?></td>
-                    <td><?= esc($c['type']) ?></td>
-                    <td><?= esc($c['category']) ?></td>
-                    <td>
-                      <span class="badge bg-<?= strtolower($c['status']) === 'published' ? 'success' : (strtolower($c['status']) === 'draft' ? 'warning' : 'secondary') ?>">
-                        <?= esc($c['status']) ?>
-                      </span>
-                    </td>
-                    <td><?= esc($c['created_at']) ?></td>
-                    <td>
-                      <a href="<?= base_url('content/edit/'.$c['id']) ?>" class="btn btn-sm btn-warning">Edit</a>
-                      <a href="<?= base_url('content/delete/'.$c['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Hapus konten ini?')">Hapus</a>
-                    </td>
-                  </tr>
-                <?php endforeach ?>
-              <?php else: ?>
+          <div class="table-responsive">
+            <table class="table table-striped align-middle mb-0">
+              <thead class="table-light">
                 <tr>
-                  <td colspan="6" class="text-center">Belum ada konten</td>
+                  <th>Judul</th>
+                  <th>Jenis</th>
+                  <th>Kategori</th>
+                  <th>Status</th>
+                  <th>Tanggal</th>
+                  <th>Aksi</th>
                 </tr>
-              <?php endif ?>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <?php if (!empty($contents)): ?>
+                  <?php foreach ($contents as $c): ?>
+                    <tr>
+                      <td class="fw-semibold"><?= esc($c['title']) ?></td>
+                      <td><?= esc($c['type']) ?></td>
+                      <td><?= esc($c['category']) ?></td>
+                      <td>
+                        <span class="badge bg-<?= strtolower($c['status']) === 'published' ? 'success' : (strtolower($c['status']) === 'draft' ? 'warning' : 'secondary') ?>">
+                          <?= esc($c['status']) ?>
+                        </span>
+                      </td>
+                      <td class="text-nowrap"><?= esc($c['created_at']) ?></td>
+                      <td class="text-nowrap">
+                        <a href="<?= base_url('content/edit/'.$c['id']) ?>" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="<?= base_url('content/delete/'.$c['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Hapus konten ini?')">Hapus</a>
+                      </td>
+                    </tr>
+                  <?php endforeach ?>
+                <?php else: ?>
+                  <tr>
+                    <td colspan="6" class="text-center py-4 text-muted">Belum ada konten</td>
+                  </tr>
+                <?php endif ?>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </main>

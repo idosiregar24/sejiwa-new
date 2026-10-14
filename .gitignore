@@ -27,3 +27,4 @@ writable/debugbar/*.json
 /vendor/
 .phpunit.result.cache
 
+*.zip

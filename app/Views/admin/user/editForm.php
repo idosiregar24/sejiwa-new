@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Konten</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= base_url('assets/css/layoutsCss/sidebar_admin.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/admin/content-management.css') ?>">
     <link rel="icon" type="image/png" href="https://ckeditor.com/assets/images/favicons/32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="https://ckeditor.com/assets/images/favicons/96x96.png" sizes="96x96">
@@ -40,28 +42,27 @@
 
     <div class="content">
         <!-- Header -->
-        <header class="text-white flex justify-between items-center py-4 px-6 rounded-b-lg shadow-md" style="background-color: #B16B8E;">
+        <header class="text-white flex justify-between items-center py-3 sm:py-4 px-4 sm:px-6 rounded-b-lg shadow-md flex-wrap gap-2" style="background-color: #B16B8E;">
             <!-- Kotak kiri dengan icon dan judul -->
-            <div class="flex items-center space-x-4">
-                <span class="text-2xl"></span>
-                <h1 class="text-xl font-semibold tracking-wider">Manajemen Pengguna</h1>
+            <div class="flex items-center space-x-3">
+                <h1 class="text-lg sm:text-xl font-semibold tracking-wider">Manajemen Pengguna</h1>
             </div>
 
             <!-- Kotak kanan dengan icon notifikasi -->
             <div class="relative">
-                <i class="fas fa-bell text-2xl"></i>
+                <i class="fas fa-bell text-xl sm:text-2xl"></i>
                 <!-- Lingkaran kecil notifikasi -->
                 <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full animate-ping"></span>
                 <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full"></span>
             </div>
         </header>
-        <main class="container mx-auto my-8 px-8">
+        <main class="container mx-auto my-4 sm:my-8 px-2 sm:px-6 md:px-8">
             <div class="text-gray-500 text-sm mb-2">
                 Pages / User / <span class="text-gray-800 font-semibold">Ubah Pengguna</span>
             </div>
-            <h2 class="text-2xl font-bold mb-6">Ubah Pengguna</h2>
+            <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Ubah Pengguna</h2>
 
-            <div class="bg-white shadow-lg p-8 rounded-lg">
+            <div class="bg-white shadow-lg p-4 sm:p-6 md:p-8 rounded-lg">
                 <form action="<?= base_url('user/update/' . $user['id']) ?>" method="post">
                     <!-- Nama Lengkap -->
                     <div class="mb-6">

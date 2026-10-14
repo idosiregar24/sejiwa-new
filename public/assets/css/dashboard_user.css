@@ -19,47 +19,39 @@ body {
 
 /* Default navbar (belum login) */
 .navbar-default {
-    background: rgba(255, 255, 255, 0.8); /* putih transparan */
-    backdrop-filter: blur(8px); /* efek blur kaca (opsional, modern browser) */
-    -webkit-backdrop-filter: blur(8px); /* untuk Safari */
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    border-bottom: 1px solid #f3d6e0; /* garis pink */
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-bottom: 1px solid #f3d6e0;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* supaya full width */
-    z-index: 1000; /* biar tidak ketutup konten */
+    width: 100%;
+    z-index: 1030;
+    transition: all 0.3s ease;
 }
 
-/* Navbar setelah login (transparan) */
+/* Navbar setelah login */
 .navbar-loggedin {
-    background: transparent; /* Transparan */
-    backdrop-filter: blur(2px); /* efek blur kaca (opsional, modern browser) */
-    -webkit-backdrop-filter: blur(8px); /* untuk Safari */
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    border-bottom: 1px solid #f3d6e0; /* garis pink */
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-bottom: 1px solid #f3d6e0;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* supaya full width */
-    z-index: 1000; /* biar tidak ketutup konten */
+    width: 100%;
+    z-index: 1030;
+    transition: all 0.3s ease;
 }
-
-/* Pastikan semua background default bootstrap ketimpa */
-.navbar.navbar-loggedin,
-.navbar.navbar-loggedin.bg-white,
-.navbar.navbar-loggedin.bg-light,
-.navbar.navbar-loggedin.bg-body-tertiary {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-}
-
 
 .navbar-brand {
-    font-weight: 600;
+    font-weight: 700;
     color: var(--primary) !important;
-    font-size: 3cap;
+    font-size: 1.6rem;
+    letter-spacing: 0.5px;
 }
 
 .nav-link {
@@ -151,11 +143,11 @@ transition: transform 0.3s ease;
 /* Hero section */
 .hero-section {
     background-color: #F7D6E0;
-    padding: 60px 8%;
+    padding: 110px 8% 60px; /* Jarak aman di bawah fixed navbar (75px + 35px) */
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 30px; /* kecilkan jaraknya */
+    gap: 30px;
 }
 
 
@@ -417,47 +409,62 @@ transition: transform 0.3s ease;
 }
 
 .bisikan-section {
-  background: linear-gradient(135deg, #f9d9e6, #f0a4c5);
-  border-radius: 12px;
-  padding: 40px;
+  background: linear-gradient(135deg, #f9d9e6 0%, #f0a4c5 100%);
+  border-radius: 20px;
+  padding: clamp(20px, 3.5vw, 38px);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(240, 164, 197, 0.25);
 }
 .testimonial-card {
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  max-width: 800px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 .testimonial-card img {
-  width: 45px;
-  height: 45px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  margin-right: 10px;
+  object-fit: cover;
+  border: 2px solid #f9d9e6;
 }
 .testimonial-text {
+  font-family: Georgia, 'Times New Roman', serif;
   font-style: italic;
-  color: #333;
-  margin-top: 20px;
+  color: #44373d;
+  line-height: 1.55;
+  font-size: clamp(0.85rem, 1.1vw, 0.95rem);
 }
 .bg-mom {
   position: absolute;
   right: 0;
   bottom: 0;
-  height: 600%;
-  max-height: 320px;
+  opacity: 0.18;
+  width: clamp(110px, 15vw, 200px);
+  max-height: 90%;
+  z-index: 1;
+  pointer-events: none;
+  object-fit: contain;
 }
 .nav-btn {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.95);
+  color: #b16b8e;
   border-radius: 50%;
   border: none;
   width: 40px;
   height: 40px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  transition: all 0.25s ease;
+  z-index: 5;
 }
 .nav-btn:hover {
-  background: #f1f1f1;
+  background: #b16b8e;
+  color: #ffffff;
+  transform: translateY(-50%) scale(1.08);
 }
 .nav-left {
   position: absolute;
@@ -489,4 +496,60 @@ transition: transform 0.3s ease;
 
 .card-img-top:hover {
     transform: scale(1.05);
+}
+
+/* ==========================================================================
+   Responsive Adaptations for Tablets and Mobile (< 992px)
+   ========================================================================== */
+@media (max-width: 991.98px) {
+    .hero-section {
+        padding-top: 100px !important; /* Pastikan jarak di mobile tidak tertutup navbar */
+        padding-bottom: 45px !important;
+        padding-left: 6% !important;
+        padding-right: 6% !important;
+        flex-direction: column-reverse;
+        text-align: center;
+        gap: 25px;
+    }
+
+    .hero-content {
+        text-align: center;
+        max-width: 100%;
+        margin-top: 10px;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(2.2rem, 7vw, 3.2rem) !important;
+        margin-top: 0;
+        margin-bottom: 12px;
+        line-height: 1.15;
+    }
+
+    .subjudul h1 {
+        font-size: clamp(1.2rem, 4.5vw, 1.8rem) !important;
+        margin-bottom: 8px;
+    }
+
+    .hero-image {
+        max-width: 260px;
+        margin: 0 auto;
+    }
+
+    .hero-image img {
+        width: 100%;
+    }
+
+    /* Navbar Dropdown Mobile */
+    .navbar-collapse {
+        background: #ffffff;
+        padding: 16px 20px;
+        border-radius: 12px;
+        margin-top: 10px;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+        border: 1px solid #f3d6e0;
+    }
+
+    .navbar-collapse .nav-link {
+        padding: 8px 0;
+    }
 }

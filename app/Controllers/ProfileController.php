@@ -26,10 +26,15 @@ class ProfileController extends BaseController
             return redirect()->to('/login')->with('error', 'Profil tidak ditemukan');
         }
 
+        // Sinkronisasi session photo jika belum ada
+        if (!empty($profile['photo']) && session()->get('photo') !== $profile['photo']) {
+            session()->set('photo', $profile['photo']);
+        }
+
         // Kirim data ke view
         return view('user/profile_user', [
             'profile' => $profile,
-            'photo'   => $profile['photo'] ?? 'default.png' // fallback foto
+            'photo'   => $profile['photo'] ?? null
         ]);
     }
 
@@ -43,6 +48,11 @@ class ProfileController extends BaseController
         }
 
         $profile = $profileModel->getProfileByUserId($userId);
+
+        // Sinkronisasi session photo jika belum ada
+        if (!empty($profile['photo']) && session()->get('photo') !== $profile['photo']) {
+            session()->set('photo', $profile['photo']);
+        }
 
         return view('user/profile_edit', ['profile' => $profile]);
     }
@@ -78,7 +88,7 @@ class ProfileController extends BaseController
         // Update ke database
         $profileModel->updateProfile($userId, $data);
 
-        // ✅ Update juga data session biar sinkron
+        // Update juga data session biar sinkron
         session()->set([
             'name'  => $data['name'],
             'email' => $data['email'],
@@ -88,39 +98,71 @@ class ProfileController extends BaseController
         return redirect()->to('/profile')->with('success', 'Profil berhasil diperbarui');
     }
 
-
     public function updatePhoto()
     {
-        $userId = session()->get('id'); // ambil id user dari session
-        $profileModel = new ProfileModel();
+        $userId = session()->get('id');
+        if (!$userId) {
+            return redirect()->to('/login')->with('error', 'Silakan login terlebih dahulu.');
+        }
 
-        // Ambil file dari input
+        $validationRule = [
+            'profile_picture' => [
+                'label' => 'Foto Profil',
+                'rules' => [
+                    'uploaded[profile_picture]',
+                    'is_image[profile_picture]',
+                    'mime_in[profile_picture,image/jpg,image/jpeg,image/png,image/webp]',
+                    'max_size[profile_picture,4096]',
+                ],
+                'errors' => [
+                    'uploaded' => 'Silakan pilih file foto terlebih dahulu.',
+                    'is_image' => 'File yang diunggah harus berupa gambar yang valid.',
+                    'mime_in'  => 'Format foto harus berupa JPG, JPEG, PNG, atau WEBP.',
+                    'max_size' => 'Ukuran file foto maksimal adalah 4MB.'
+                ]
+            ]
+        ];
+
+        if (!$this->validate($validationRule)) {
+            $errorMsg = $this->validator->getError('profile_picture') ?? 'Gagal mengunggah foto.';
+            return redirect()->back()->with('error', $errorMsg);
+        }
+
         $file = $this->request->getFile('profile_picture');
 
         if ($file && $file->isValid() && !$file->hasMoved()) {
-            // Nama baru random biar unik
-            $newName = $file->getRandomName();
-
-            // Pindahkan ke folder public/uploads
-            $file->move(FCPATH . 'uploads/profile_photo/', $newName);
-
-            // Hapus foto lama kalau ada
-            $oldPhoto = $profileModel->getProfileByUserId($userId)['photo'] ?? null;
-            if ($oldPhoto && file_exists(FCPATH . 'uploads/profile_photo/' . $oldPhoto)) {
-                unlink(FCPATH . 'uploads/profile_photo/' . $oldPhoto);
+            $uploadDir = FCPATH . 'uploads/profile_photo/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
             }
 
-            // Update ke database pakai model
+            // Nama file acak dan unik
+            $newName = $file->getRandomName();
+
+            // Pindahkan file ke direktori tujuan
+            $file->move($uploadDir, $newName);
+
+            $profileModel = new ProfileModel();
+            $currentProfile = $profileModel->getProfileByUserId($userId);
+            $oldPhoto = $currentProfile['photo'] ?? null;
+
+            // Hapus foto lama bila ada di disk
+            if (!empty($oldPhoto) && file_exists($uploadDir . $oldPhoto) && is_file($uploadDir . $oldPhoto)) {
+                unlink($uploadDir . $oldPhoto);
+            }
+
+            // Update ke database
             $profileModel->updateProfile($userId, [
                 'photo'      => $newName,
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
 
-            // Update session biar langsung ke-refresh
+            // Update session agar langsung aktif di seluruh halaman & navbar
             session()->set('photo', $newName);
 
             return redirect()->back()->with('success', 'Foto profil berhasil diperbarui!');
         }
-        return redirect()->back()->with('error', 'Gagal mengunggah foto.');
+
+        return redirect()->back()->with('error', 'Gagal memproses file foto.');
     }
 }

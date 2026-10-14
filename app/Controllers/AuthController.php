@@ -151,13 +151,7 @@ class AuthController extends BaseController
 
             // Kirim OTP
             if ($channel === 'email') {
-                $email = \Config\Services::email();
-                $email->setTo($emailOrPhone);
-                $email->setFrom('noreply@yourapp.com', 'Aplikasi Sejiwa');
-                $email->setSubject('Kode OTP Verifikasi');
-                $email->setMessage("Kode OTP Anda adalah: <b>$otpCode</b>");
-                $email->setMailType('html');
-                $email->send();
+                $this->sendEmailOtp($emailOrPhone, $otpCode);
             } else {
                 $this->sendWhatsappOtp($emailOrPhone, $otpCode);
             }
@@ -174,16 +168,71 @@ class AuthController extends BaseController
 
     private function sendEmailOtp($to, $otp)
     {
-        $email = \Config\Services::email();
+        if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
+            log_message('error', 'Registration OTP Email: Alamat email tidak valid: ' . $to);
+            return false;
+        }
 
-        $email->setTo($to);
-        $email->setSubject('Kode OTP Verifikasi Akun');
-        $email->setMessage("Kode OTP Anda adalah: <b>$otp</b>. Jangan berikan kepada siapa pun.");
+        try {
+            $email = \Config\Services::email();
+            $emailConfig = config('Email');
 
-        if ($email->send()) {
-            return true;
-        } else {
-            log_message('error', $email->printDebugger(['headers']));
+            $fromEmail = !empty($emailConfig->fromEmail) ? $emailConfig->fromEmail : 'sejiwa.apps@gmail.com';
+            $fromName  = !empty($emailConfig->fromName) ? $emailConfig->fromName : 'SEJIWA';
+
+            $email->setFrom($fromEmail, $fromName);
+            $email->setTo($to);
+            $email->setSubject('Kode OTP Verifikasi Akun - SEJIWA');
+
+            $message = '
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <style>
+                    body { font-family: "Poppins", Arial, sans-serif; background-color: #f7f5f7; margin:0; padding: 20px; }
+                    .card { max-width: 500px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+                    .header { background: linear-gradient(135deg, #d49cb2 0%, #b16b8e 100%); padding: 30px 20px; text-align: center; color: #ffffff; }
+                    .header h1 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: 1px; }
+                    .body { padding: 30px 25px; color: #4b5563; }
+                    .body p { font-size: 15px; line-height: 1.6; margin: 0 0 16px; }
+                    .otp-box { background: #fdf2f7; border: 2px dashed #b16b8e; border-radius: 12px; text-align: center; padding: 18px; margin: 25px 0; }
+                    .otp-code { font-size: 32px; font-weight: 700; letter-spacing: 8px; color: #b16b8e; font-family: monospace; }
+                    .footer { text-align: center; padding: 20px; font-size: 13px; color: #9ca3af; }
+                </style>
+            </head>
+            <body>
+                <div class="card">
+                    <div class="header">
+                        <h1>SEJIWA</h1>
+                    </div>
+                    <div class="body">
+                        <p>Halo,</p>
+                        <p>Terima kasih telah mendaftar di SEJIWA. Masukkan kode OTP berikut untuk memverifikasi akun Anda:</p>
+                        <div class="otp-box">
+                            <div class="otp-code">' . esc($otp) . '</div>
+                        </div>
+                        <p style="color: #6b7280; font-size: 13px;">*Kode ini berlaku selama <strong>5 menit</strong>. Jangan bagikan kode ini kepada siapapun.</p>
+                    </div>
+                    <div class="footer">
+                        &copy; ' . date('Y') . ' SEJIWA. All rights reserved.
+                    </div>
+                </div>
+            </body>
+            </html>
+            ';
+
+            $email->setMessage($message);
+            $email->setMailType('html');
+
+            if ($email->send()) {
+                return true;
+            } else {
+                log_message('error', 'Registration OTP Email failed: ' . $email->printDebugger(['headers', 'subject']));
+                return false;
+            }
+        } catch (\Throwable $e) {
+            log_message('error', 'Registration OTP Email exception: ' . $e->getMessage());
             return false;
         }
     }
@@ -314,6 +363,7 @@ class AuthController extends BaseController
             'name'       => $userData['name'],
             'email'      => $userData['email'],
             'role'       => $userData['role'],
+            'photo'      => $userData['photo'] ?? null,
             'isLoggedIn' => true
         ];
 
@@ -326,7 +376,12 @@ class AuthController extends BaseController
         helper(['url', 'form']);
 
         if ($this->request->getMethod() === 'post') {
-            $email = $this->request->getPost('email');
+            $email = trim((string)$this->request->getPost('email'));
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return redirect()->back()->with('error', 'Format email tidak valid.');
+            }
+
             $user  = $this->userModel->where('email', $email)->first();
 
             if (!$user) {
@@ -337,23 +392,42 @@ class AuthController extends BaseController
                 return redirect()->back()->with('error', 'Akun sudah terverifikasi.');
             }
 
-            // Generate token/OTP baru
+            // Cooldown check 60 detik
+            $otpModel = new \App\Models\OtpModel();
+            $recentOtp = $otpModel->where('user_id', $user['id'])
+                                  ->orderBy('id', 'DESC')
+                                  ->first();
+            if ($recentOtp && !empty($recentOtp['created_at'])) {
+                $diff = time() - strtotime($recentOtp['created_at']);
+                if ($diff < 60) {
+                    $wait = 60 - $diff;
+                    return redirect()->back()->with('error', "Mohon tunggu {$wait} detik sebelum meminta verifikasi ulang.");
+                }
+            }
+
+            // Generate token baru
             $token = bin2hex(random_bytes(16));
 
-            // Simpan ke tabel otp/token_verifikasi
-            $otpModel = new \App\Models\OtpModel();
             $otpModel->save([
-                'user_id' => $user['id'],
-                'token'   => $token,
+                'user_id'    => $user['id'],
+                'token'      => $token,
                 'expired_at' => date('Y-m-d H:i:s', strtotime('+10 minutes'))
             ]);
 
-            // Kirim email (pseudo-code)
-            service('email')
-                ->setTo($email)
-                ->setSubject('Verifikasi Ulang Akun')
-                ->setMessage("Klik link berikut untuk verifikasi ulang: " . base_url("auth/verify/" . $token))
-                ->send();
+            try {
+                $emailService = \Config\Services::email();
+                $emailConfig = config('Email');
+                $fromEmail = !empty($emailConfig->fromEmail) ? $emailConfig->fromEmail : 'sejiwa.apps@gmail.com';
+                $fromName  = !empty($emailConfig->fromName) ? $emailConfig->fromName : 'SEJIWA';
+
+                $emailService->setFrom($fromEmail, $fromName);
+                $emailService->setTo($email);
+                $emailService->setSubject('Verifikasi Ulang Akun - SEJIWA');
+                $emailService->setMessage("Klik link berikut untuk verifikasi ulang akun SEJIWA Anda: " . base_url("auth/verify/" . $token));
+                $emailService->send();
+            } catch (\Throwable $e) {
+                log_message('error', 'Resend verification exception: ' . $e->getMessage());
+            }
 
             return redirect()->back()->with('success', 'Link verifikasi ulang sudah dikirim ke email.');
         }
@@ -400,10 +474,24 @@ class AuthController extends BaseController
             return redirect()->back()->withInput()->with('error', 'Email atau Nomor HP tidak ditemukan dalam sistem.');
         }
 
+        $otpModel = new \App\Models\OtpModel();
+
+        // Keamanan: Rate limiting / Cooldown 60 detik sebelum minta OTP baru
+        $recentOtp = $otpModel->where('user_id', $user['id'])
+                              ->where('purpose', 'forgot_password')
+                              ->orderBy('id', 'DESC')
+                              ->first();
+
+        if ($recentOtp && !empty($recentOtp['created_at'])) {
+            $diffSeconds = time() - strtotime($recentOtp['created_at']);
+            if ($diffSeconds < 60) {
+                $wait = 60 - $diffSeconds;
+                return redirect()->back()->withInput()->with('error', "Mohon tunggu {$wait} detik sebelum meminta kode OTP baru.");
+            }
+        }
+
         $channel = filter_var($input, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
         $contact = $channel === 'email' ? $user['email'] : ($user['phone'] ?? $input);
-
-        $otpModel = new \App\Models\OtpModel();
 
         // Nonaktifkan OTP reset sebelumnya yang belum terpakai untuk user ini
         $otpModel->where('user_id', $user['id'])
@@ -411,6 +499,9 @@ class AuthController extends BaseController
                  ->where('is_used', 0)
                  ->set(['is_used' => 1])
                  ->update();
+
+        // Reset hitungan percobaan gagal
+        $this->session->set('reset_otp_attempts', 0);
 
         // Buat 5-digit OTP
         $otpCode = (string) random_int(10000, 99999);
@@ -487,6 +578,26 @@ class AuthController extends BaseController
             return redirect()->to(base_url('forgot-password'))->with('error', 'Sesi telah kedaluwarsa.');
         }
 
+        $otpModel = new \App\Models\OtpModel();
+
+        // Keamanan: Cek batas percobaan brute-force (Maksimal 5 kali salah)
+        $attempts = (int) $this->session->get('reset_otp_attempts');
+        if ($attempts >= 5) {
+            // Invalidate OTP aktif
+            $otpModel->where('user_id', $userId)
+                     ->where('purpose', 'forgot_password')
+                     ->where('is_used', 0)
+                     ->set(['is_used' => 1])
+                     ->update();
+
+            $this->session->remove('reset_otp_attempts');
+            $msg = 'Anda telah melebihi batas percobaan (5 kali). Kode OTP dinonaktifkan demi keamanan. Silakan minta kode baru.';
+            if ($this->request->isAJAX()) {
+                return $this->response->setJSON(['status' => 'error', 'message' => $msg]);
+            }
+            return redirect()->back()->with('error', $msg);
+        }
+
         $otpInput = $this->request->getPost('otp');
         $otp      = is_array($otpInput) ? implode('', $otpInput) : trim((string)$otpInput);
 
@@ -500,12 +611,11 @@ class AuthController extends BaseController
             return redirect()->back()->with('error', 'Silakan masukkan 5 digit kode OTP.');
         }
 
-        $otpModel = new \App\Models\OtpModel();
-        $otpData  = $otpModel->where('user_id', $userId)
-                             ->where('purpose', 'forgot_password')
-                             ->where('is_used', 0)
-                             ->orderBy('id', 'DESC')
-                             ->first();
+        $otpData = $otpModel->where('user_id', $userId)
+                            ->where('purpose', 'forgot_password')
+                            ->where('is_used', 0)
+                            ->orderBy('id', 'DESC')
+                            ->first();
 
         if (!$otpData) {
             $msg = 'Kode OTP tidak ditemukan atau sudah digunakan. Silakan klik Kirim Ulang.';
@@ -523,19 +633,33 @@ class AuthController extends BaseController
             return redirect()->back()->with('error', $msg);
         }
 
+        // Cocokkan kode OTP
         if ($otp !== $otpData['otp_code']) {
-            $msg = 'Kode OTP salah. Silakan periksa kembali.';
+            $attempts++;
+            $this->session->set('reset_otp_attempts', $attempts);
+            $remaining = 5 - $attempts;
+
+            if ($remaining <= 0) {
+                // Nonaktifkan OTP karena sudah mencapai batas 5 kali salah
+                $otpModel->update($otpData['id'], ['is_used' => 1]);
+                $this->session->remove('reset_otp_attempts');
+                $msg = 'Anda telah salah memasukkan kode sebanyak 5 kali. Kode OTP dinonaktifkan. Silakan minta kode baru.';
+            } else {
+                $msg = "Kode OTP salah. Sisa kesempatan mencoba: {$remaining} kali.";
+            }
+
             if ($this->request->isAJAX()) {
                 return $this->response->setJSON(['status' => 'error', 'message' => $msg]);
             }
             return redirect()->back()->with('error', $msg);
         }
 
-        // Tandai OTP terpakai
+        // Tandai OTP terpakai & bersihkan hitungan salah
         $otpModel->update($otpData['id'], [
             'is_used'     => 1,
             'is_verified' => 1
         ]);
+        $this->session->remove('reset_otp_attempts');
 
         // Berikan otorisasi untuk langkah perubahan kata sandi
         $this->session->set([
@@ -581,11 +705,34 @@ class AuthController extends BaseController
         }
 
         $otpModel = new \App\Models\OtpModel();
+
+        // Keamanan: Cooldown 60 detik sebelum kirim ulang
+        $recentOtp = $otpModel->where('user_id', $userId)
+                              ->where('purpose', 'forgot_password')
+                              ->orderBy('id', 'DESC')
+                              ->first();
+
+        if ($recentOtp && !empty($recentOtp['created_at'])) {
+            $diffSeconds = time() - strtotime($recentOtp['created_at']);
+            if ($diffSeconds < 60) {
+                $wait = 60 - $diffSeconds;
+                $msg = "Mohon tunggu {$wait} detik sebelum meminta kode OTP baru.";
+                if ($this->request->isAJAX()) {
+                    return $this->response->setJSON(['status' => 'error', 'message' => $msg]);
+                }
+                return redirect()->back()->with('error', $msg);
+            }
+        }
+
+        // Nonaktifkan OTP reset sebelumnya
         $otpModel->where('user_id', $userId)
                  ->where('purpose', 'forgot_password')
                  ->where('is_used', 0)
                  ->set(['is_used' => 1])
                  ->update();
+
+        // Reset hitungan percobaan gagal
+        $this->session->set('reset_otp_attempts', 0);
 
         $otpCode = (string) random_int(10000, 99999);
         $otpModel->insert([
@@ -684,20 +831,35 @@ class AuthController extends BaseController
             'password' => $hashedPassword
         ]);
 
+        // Keamanan: Invalidate semua OTP terbuka untuk user ini
+        $otpModel = new \App\Models\OtpModel();
+        $otpModel->where('user_id', $userId)
+                 ->set(['is_used' => 1])
+                 ->update();
+
         // Bersihkan sesi reset
         $this->session->remove([
             'reset_user_id',
             'reset_contact',
             'reset_channel',
             'reset_verified_user_id',
-            'reset_allowed'
+            'reset_allowed',
+            'reset_otp_attempts'
         ]);
+
+        // Regenerasi session ID untuk mencegah session fixation
+        $this->session->regenerate(true);
 
         return redirect()->to(base_url('login'))->with('success', 'Kata sandi Anda berhasil diperbarui! Silakan masuk dengan kata sandi baru.');
     }
 
     private function sendResetOtpEmail($to, $otp)
     {
+        if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
+            log_message('error', 'Reset OTP Email: Alamat email tidak valid: ' . $to);
+            return false;
+        }
+
         try {
             $email = \Config\Services::email();
             $emailConfig = config('Email');

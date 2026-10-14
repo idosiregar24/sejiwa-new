@@ -54,8 +54,11 @@ $routes->post('dashboard_admin', 'AdminController::dashboard_admin');
 $routes->get('content-management', 'ContentController::index');
 $routes->post('content-management', 'ContentController::index');
 
-$routes->get('forum-management', 'forumController::index');
-$routes->post('forum-management', 'forumController::index');
+// Routes Untuk ForumController
+$routes->get('forum', 'ForumController::index');
+$routes->post('forum', 'ForumController::index');
+$routes->get('forum-management', 'ForumController::index');
+$routes->post('forum-management', 'ForumController::index');
 
 //Routes untuk ContentController
 $routes->get('content/content_form', 'ContentController::create');

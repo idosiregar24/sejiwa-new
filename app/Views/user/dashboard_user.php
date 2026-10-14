@@ -12,12 +12,11 @@
 </head>
 
 <body>
+  <!-- Menambahkan Navbar -->
+  <?= $this->include('layouts/navbar') ?>
+
   <main>
     <section class="hero-section">
-      <!-- Menambahkan Navbar -->
-      <?= $this->include('layouts/navbar') ?>
-
-
       <div class="hero-content">
         <h1>SEJIWA</h1>
         <div class="subjudul">
@@ -109,83 +108,139 @@
 
     <!-- Bisikan Ibu Content Section -->
     <section class="Bisikan-Ibu-section py-4 position-relative">
-      <div class="bisikan-section position-relative">
+      <div class="container">
+        <div class="bisikan-section position-relative">
 
-        <!-- Header -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <div>
+          <!-- Header -->
+          <div class="bisikan-header mb-4">
             <h2 class="fw-bold">Bisikan Ibu</h2>
             <h6 class="text-muted">
               Bisikan Ibu adalah fitur yang menampilkan pesan afirmasi dan refleksi positif dari sesama ibu pengguna,
               dirancang untuk memberikan dukungan emosional dan rasa kebersamaan.
             </h6>
           </div>
-        </div>
 
-        <!-- Tombol Navigasi Kiri -->
-        <button class="nav-btn nav-left" type="button">&lt;</button>
+          <!-- Tombol Navigasi Kiri -->
+          <button class="nav-btn nav-left" type="button" aria-label="Sebelumnya">
+            <i class="bi bi-chevron-left"></i>
+          </button>
 
-        <!-- Slider Wrapper -->
-        <div class="bisikan-slider-container position-relative">
-          <div class="bisikan-slider d-flex overflow-auto pb-2">
+          <!-- Slider Wrapper -->
+          <div class="bisikan-slider-container position-relative">
+            <div class="bisikan-slider d-flex overflow-auto pb-2">
 
-            <!-- Contoh Card -->
-            <div class="card testimonial-card shadow-sm">
-              <div class="d-flex align-items-center p-3">
-                <img src="https://i.pravatar.cc/100?img=32" alt="avatar" class="rounded-circle me-2">
-                <div>
-                  <h6 class="mb-0 fw-bold">Ibu Siti</h6>
-                  <small class="text-muted">Guru TK</small>
+              <!-- Card 1 -->
+              <div class="card testimonial-card shadow-sm">
+                <div class="d-flex align-items-center p-3">
+                  <img src="https://i.pravatar.cc/100?img=32" alt="avatar" class="rounded-circle me-2">
+                  <div>
+                    <h6 class="mb-0 fw-bold">Ibu Siti</h6>
+                    <small class="text-muted">Guru TK</small>
+                  </div>
                 </div>
+                <hr class="my-0 opacity-25">
+                <p class="testimonial-text p-3 mb-0">
+                  “Pelukanmu menjadi jeda yang menenangkan di hari yang penuh tantangan.”
+                </p>
               </div>
-              <hr class="my-2">
-              <p class="testimonial-text p-3 mb-0">
-                “Pelukanmu menjadi jeda yang menenangkan di hari yang penuh tantangan.”
-              </p>
-            </div>
 
-            <div class="card testimonial-card shadow-sm">
-              <div class="d-flex align-items-center p-3">
-                <img src="https://i.pravatar.cc/100?img=33" alt="avatar" class="rounded-circle me-2">
-                <div>
-                  <h6 class="mb-0 fw-bold">Ibu Rina</h6>
-                  <small class="text-muted">Ibu Rumah Tangga</small>
+              <!-- Card 2 -->
+              <div class="card testimonial-card shadow-sm">
+                <div class="d-flex align-items-center p-3">
+                  <img src="https://i.pravatar.cc/100?img=47" alt="avatar" class="rounded-circle me-2">
+                  <div>
+                    <h6 class="mb-0 fw-bold">Ibu Rina</h6>
+                    <small class="text-muted">Ibu Rumah Tangga</small>
+                  </div>
                 </div>
+                <hr class="my-0 opacity-25">
+                <p class="testimonial-text p-3 mb-0">
+                  “Saat lelah dan bingung, aku menemukan ketenangan di ruang kecil ini.”
+                </p>
               </div>
-              <hr class="my-2">
-              <p class="testimonial-text p-3 mb-0">
-                “Saat lelah dan bingung, aku menemukan ketenangan di ruang kecil ini.”
-              </p>
-            </div>
-            <div class="card testimonial-card shadow-sm">
-              <div class="d-flex align-items-center p-3">
-                <img src="https://i.pravatar.cc/100?img=33" alt="avatar" class="rounded-circle me-2">
-                <div>
-                  <h6 class="mb-0 fw-bold">Ibu Rina</h6>
-                  <small class="text-muted">Ibu Rumah Tangga</small>
-                </div>
-              </div>
-              <hr class="my-2">
-              <p class="testimonial-text p-3 mb-0">
-                “Saat lelah dan bingung, aku menemukan ketenangan di ruang kecil ini.”
-              </p>
-            </div>
 
+              <!-- Card 3 -->
+              <div class="card testimonial-card shadow-sm">
+                <div class="d-flex align-items-center p-3">
+                  <img src="https://i.pravatar.cc/100?img=44" alt="avatar" class="rounded-circle me-2">
+                  <div>
+                    <h6 class="mb-0 fw-bold">Ibu Dewi</h6>
+                    <small class="text-muted">Ibu Bekerja</small>
+                  </div>
+                </div>
+                <hr class="my-0 opacity-25">
+                <p class="testimonial-text p-3 mb-0">
+                  “Menjadi ibu yang bahagia dan tenang adalah hadiah terbaik untuk anak-anakku.”
+                </p>
+              </div>
+
+              <!-- Card 4 -->
+              <div class="card testimonial-card shadow-sm">
+                <div class="d-flex align-items-center p-3">
+                  <img src="https://i.pravatar.cc/100?img=48" alt="avatar" class="rounded-circle me-2">
+                  <div>
+                    <h6 class="mb-0 fw-bold">Ibu Maya</h6>
+                    <small class="text-muted">Ibu 2 Anak</small>
+                  </div>
+                </div>
+                <hr class="my-0 opacity-25">
+                <p class="testimonial-text p-3 mb-0">
+                  “Tidak apa-apa istirahat sejenak hari ini. Kamu sudah berjuang luar biasa.”
+                </p>
+              </div>
+
+            </div>
           </div>
+
+          <!-- Tombol Navigasi Kanan -->
+          <button class="nav-btn nav-right" type="button" aria-label="Selanjutnya">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+
+          <!-- Background Image -->
+          <img src="<?= base_url('assets/img/bisikan-bunda.svg') ?>" alt="mom" class="bg-mom">
         </div>
-
-        <!-- Tombol Navigasi Kanan -->
-        <button class="nav-btn nav-right" type="button">&gt;</button>
-
-        <!-- Background Image -->
-        <img src="<?= base_url('assets/img/bisikan-bunda.svg') ?>" alt="mom" class="bg-mom">
       </div>
 
       <style>
-        .bisikan-slider-container {
-          padding: 0 60px;
+        .bisikan-section {
+          background: linear-gradient(135deg, #f9d9e6 0%, #f0a4c5 100%);
+          border-radius: 20px;
+          padding: clamp(20px, 3.5vw, 38px);
+          position: relative;
+          overflow: hidden;
+          box-shadow: 0 4px 20px rgba(240, 164, 197, 0.25);
+        }
+
+        .bisikan-header {
           position: relative;
           z-index: 2;
+          max-width: 780px;
+        }
+
+        .bisikan-header h2 {
+          font-size: clamp(1.4rem, 2.5vw, 2rem);
+          color: #2c2025;
+          margin-bottom: 6px;
+        }
+
+        .bisikan-header h6 {
+          font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+          color: #55444b !important;
+          line-height: 1.55;
+          margin-bottom: 0;
+        }
+
+        .bisikan-slider-container {
+          padding: 0 48px;
+          position: relative;
+          z-index: 2;
+        }
+
+        @media (max-width: 767.98px) {
+          .bisikan-slider-container {
+            padding: 0 6px;
+          }
         }
 
         .bisikan-slider {
@@ -193,7 +248,9 @@
           scroll-behavior: smooth;
           -webkit-overflow-scrolling: touch;
           scrollbar-width: none;
+          scroll-snap-type: x mandatory;
           cursor: grab;
+          user-select: none;
         }
 
         .bisikan-slider:active {
@@ -205,24 +262,36 @@
         }
 
         .testimonial-card {
-          min-width: 280px;
-          flex-shrink: 0;
-          border-radius: 12px;
+          flex: 0 0 auto;
+          width: clamp(260px, 78vw, 320px);
+          border-radius: 14px;
           overflow: hidden;
-          background-color: #fff0f5;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          background-color: #ffffff;
+          border: 1px solid rgba(255, 255, 255, 0.8);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+          scroll-snap-align: start;
+          transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.3s ease;
         }
 
         .testimonial-card:hover {
           transform: translateY(-5px);
-          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 10px 22px rgba(177, 107, 142, 0.2);
+        }
+
+        .testimonial-card img {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid #f9d9e6;
         }
 
         .testimonial-text {
-          font-family: Georgia, serif;
-          line-height: 1.5;
-          color: #333;
+          font-family: Georgia, 'Times New Roman', serif;
+          line-height: 1.55;
+          color: #44373d;
           font-style: italic;
+          font-size: clamp(0.85rem, 1.1vw, 0.95rem);
         }
 
         .nav-btn {
@@ -233,19 +302,23 @@
           height: 40px;
           border-radius: 50%;
           border: none;
-          background-color: #fff0f5;
+          background-color: rgba(255, 255, 255, 0.95);
+          color: #b16b8e;
           display: flex;
           align-items: center;
           justify-content: center;
           z-index: 5;
           cursor: pointer;
-          font-weight: bold;
-          font-size: 20px;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+          font-size: 16px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+          transition: all 0.25s ease;
         }
 
         .nav-btn:hover {
-          background-color: #ffccf2;
+          background-color: #b16b8e;
+          color: #ffffff;
+          transform: translateY(-50%) scale(1.08);
+          box-shadow: 0 6px 14px rgba(177, 107, 142, 0.3);
         }
 
         .nav-left {
@@ -256,14 +329,32 @@
           right: 10px;
         }
 
+        @media (max-width: 767.98px) {
+          .nav-btn {
+            width: 32px;
+            height: 32px;
+            font-size: 13px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+          }
+          .nav-left {
+            left: 4px;
+          }
+          .nav-right {
+            right: 4px;
+          }
+        }
+
         .bg-mom {
           position: absolute;
           bottom: 0;
           right: 0;
-          opacity: 0.15;
-          width: 180px;
+          opacity: 0.18;
+          width: clamp(110px, 15vw, 200px);
+          max-height: 90%;
           z-index: 1;
           pointer-events: none;
+          object-fit: contain;
         }
       </style>
 
@@ -273,30 +364,42 @@
           const leftBtn = document.querySelector('.nav-left');
           const rightBtn = document.querySelector('.nav-right');
 
-          // Cek tombol ditemukan
           if (!slider || !leftBtn || !rightBtn) return;
 
-          // Navigasi kiri/kanan
-          leftBtn.addEventListener('click', () => {
-            slider.scrollBy({ left: -300, behavior: 'smooth' });
+          const getScrollDistance = () => {
+            const card = slider.querySelector('.testimonial-card');
+            return card ? card.offsetWidth + 16 : 300;
+          };
+
+          leftBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            slider.scrollBy({ left: -getScrollDistance(), behavior: 'smooth' });
           });
 
-          rightBtn.addEventListener('click', () => {
-            slider.scrollBy({ left: 300, behavior: 'smooth' });
+          rightBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            slider.scrollBy({ left: getScrollDistance(), behavior: 'smooth' });
           });
 
-          // Drag support
+          // Mouse Drag Support
           let isDown = false;
-          let startX;
-          let scrollLeft;
+          let startX = 0;
+          let scrollLeft = 0;
 
           slider.addEventListener('mousedown', (e) => {
             isDown = true;
             startX = e.pageX - slider.offsetLeft;
             scrollLeft = slider.scrollLeft;
           });
-          slider.addEventListener('mouseleave', () => isDown = false);
-          slider.addEventListener('mouseup', () => isDown = false);
+
+          window.addEventListener('mouseup', () => {
+            isDown = false;
+          });
+
+          slider.addEventListener('mouseleave', () => {
+            isDown = false;
+          });
+
           slider.addEventListener('mousemove', (e) => {
             if (!isDown) return;
             e.preventDefault();

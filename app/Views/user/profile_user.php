@@ -67,19 +67,33 @@
                 <div class="col-md-3 text-center profile-section">
                     <div class="position-relative d-inline-block">
                         <!-- Foto profil -->
-                        <img src="<?= base_url('uploads/profile_photo/' . $photo) ?>"
-                            alt="Foto Profil"
-                            class="profile-img rounded-circle">
+                        <?php
+                            $userPhoto = $photo ?? ($profile['photo'] ?? session()->get('photo'));
+                            $hasPhoto = !empty($userPhoto) && file_exists(FCPATH . 'uploads/profile_photo/' . $userPhoto);
+                            $initial = strtoupper(mb_substr(trim($profile['name'] ?? 'U'), 0, 1));
+                        ?>
+                        <?php if ($hasPhoto): ?>
+                            <img src="<?= base_url('uploads/profile_photo/' . esc($userPhoto)) ?>"
+                                alt="Foto Profil"
+                                class="profile-img rounded-circle shadow-sm" style="object-fit: cover;">
+                        <?php else: ?>
+                            <div class="profile-img rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow-sm mx-auto"
+                                 style="width: 140px; height: 140px; background: linear-gradient(135deg, #d49cb2 0%, #b16b8e 100%); font-size: 48px; border: 4px solid #ffffff;">
+                                <?= esc($initial) ?>
+                            </div>
+                        <?php endif; ?>
 
                         <!-- Tombol edit foto -->
                         <button type="button"
                             class="btn btn-sm btn-light position-absolute bottom-0 end-0 rounded-circle shadow"
+                            title="Ubah Foto Profil"
                             onclick="document.getElementById('uploadPhoto').click()">
                             <i class="bi bi-camera"></i>
                         </button>
 
                         <!-- Input file hidden -->
                         <form action="<?= base_url('profile/updatePhoto') ?>" method="post" enctype="multipart/form-data">
+                            <?= csrf_field() ?>
                             <input type="file" id="uploadPhoto" name="profile_picture" accept="image/*" style="display:none" onchange="this.form.submit()">
                         </form>
                     </div>

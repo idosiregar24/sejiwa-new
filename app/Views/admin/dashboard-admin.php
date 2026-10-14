@@ -50,7 +50,10 @@
             box-sizing: border-box;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 991.98px) {
+            body {
+                display: block;
+            }
             .content {
                 margin-left: 0;
                 width: 100%;
@@ -343,7 +346,7 @@
         <!-- 4 Kartu Statistik Ringkasan -->
         <div class="row g-4 mb-4">
             <!-- Total Pengguna -->
-            <div class="col-xl-3 col-md-6">
+            <div class="col-xl-3 col-sm-6 col-12">
                 <div class="stat-card">
                     <div class="stat-icon-wrapper icon-users">
                         <i class="bi bi-people-fill"></i>
@@ -359,7 +362,7 @@
             </div>
 
             <!-- Konten Edukasi -->
-            <div class="col-xl-3 col-md-6">
+            <div class="col-xl-3 col-sm-6 col-12">
                 <div class="stat-card">
                     <div class="stat-icon-wrapper icon-content">
                         <i class="bi bi-mortarboard-fill"></i>
@@ -376,7 +379,7 @@
             </div>
 
             <!-- Total Interaksi (Likes & Komentar) -->
-            <div class="col-xl-3 col-md-6">
+            <div class="col-xl-3 col-sm-6 col-12">
                 <div class="stat-card">
                     <div class="stat-icon-wrapper icon-likes">
                         <i class="bi bi-heart-fill"></i>
@@ -393,7 +396,7 @@
             </div>
 
             <!-- Diskusi Forum -->
-            <div class="col-xl-3 col-md-6">
+            <div class="col-xl-3 col-sm-6 col-12">
                 <div class="stat-card">
                     <div class="stat-icon-wrapper icon-forum">
                         <i class="bi bi-chat-dots-fill"></i>

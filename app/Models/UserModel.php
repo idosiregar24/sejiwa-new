@@ -13,16 +13,17 @@ class UserModel extends Model
     protected $returnType       = 'array';
 
     protected $allowedFields = [
-    'name',
-    'email',
-    'phone',
-    'date_of_birth',
-    'password',
-    'role',
-    'is_verified',
-    'created_at',
-    'updated_at' // Tambahkan ini
-];
+        'name',
+        'email',
+        'phone',
+        'date_of_birth',
+        'password',
+        'role',
+        'is_verified',
+        'photo',
+        'created_at',
+        'updated_at'
+    ];
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';

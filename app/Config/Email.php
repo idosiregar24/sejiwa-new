@@ -64,6 +64,22 @@ class Email extends BaseConfig
      */
     public string $SMTPCrypto = 'tls';
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        // Dukung prefix email.* maupun mail.* dari .env
+        $this->fromEmail   = env('email.fromEmail', env('mail.fromEmail', $this->fromEmail));
+        $this->fromName    = env('email.fromName', env('mail.fromName', $this->fromName));
+        $this->protocol    = env('email.protocol', env('mail.protocol', $this->protocol));
+        $this->SMTPHost    = env('email.SMTPHost', env('mail.SMTPHost', $this->SMTPHost));
+        $this->SMTPUser    = env('email.SMTPUser', env('mail.SMTPUser', $this->SMTPUser));
+        $this->SMTPPass    = env('email.SMTPPass', env('mail.SMTPPass', $this->SMTPPass));
+        $this->SMTPPort    = (int) env('email.SMTPPort', env('mail.SMTPPort', $this->SMTPPort));
+        $this->SMTPTimeout = (int) env('email.SMTPTimeout', env('mail.SMTPTimeout', 30));
+        $this->SMTPCrypto  = env('email.SMTPCrypto', env('mail.SMTPCrypto', $this->SMTPCrypto));
+    }
+
     /**
      * Enable word-wrap
      */

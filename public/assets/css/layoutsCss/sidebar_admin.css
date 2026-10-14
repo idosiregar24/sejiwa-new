@@ -1,29 +1,48 @@
+/* ==========================================================================
+   Admin Sidebar & Responsive Layout Stylesheet
+   ========================================================================== */
 
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
     display: flex;
+    min-height: 100vh;
+    background-color: #f8fafc;
 }
 
-/* Sidebar */
+/* Desktop Sidebar (Default) */
 .sidebar {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 240px;
-    height: 98vh;
-    background: #fff;
+    height: 100vh;
+    background: #ffffff;
     border-right: 1px solid #eee;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 20px 10px;
+    padding: 20px 12px;
+    box-sizing: border-box;
+    z-index: 1030;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding: 0 8px;
 }
 
 .sidebar h2 {
     font-size: 22px;
     font-weight: 700;
     color: #a55c7d;
-    margin-bottom: 30px;
-    padding-left: 15px;
+    margin: 0;
+    padding-left: 6px;
+    letter-spacing: 0.5px;
 }
 
 .menu {
@@ -31,36 +50,41 @@ body {
     padding: 0;
     margin: 0;
     flex-grow: 1;
+    overflow-y: auto;
 }
 
 .menu li {
-    margin: 15px 0;
+    margin: 8px 0;
 }
 
 .menu a {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: #000;
-    font-size: 16px;
-    padding: 10px 15px;
+    color: #2d3748;
+    font-size: 15px;
+    padding: 10px 14px;
     border-radius: 8px;
-    transition: 0.3s;
+    transition: all 0.2s ease;
+    font-weight: 500;
 }
 
 .menu a i {
     font-size: 18px;
     margin-right: 12px;
+    width: 20px;
+    text-align: center;
 }
 
 .menu a.active {
-    background: #a55c7d;
-    color: #fff;
+    background: #B16B8E !important;
+    color: #ffffff !important;
     font-weight: 600;
+    box-shadow: 0 4px 10px rgba(177, 107, 142, 0.25);
 }
 
 .menu a:hover {
-    background: #f2e6ec;
+    background: #fdf2f7;
     color: #a55c7d;
 }
 
@@ -68,9 +92,11 @@ body {
 .user-profile {
     display: flex;
     align-items: center;
-    padding: 10px 15px;
-    border-top: 1px solid #eee;
-    margin-top: 20px;
+    padding: 12px 10px;
+    border-top: 1px solid #edf2f7;
+    margin-top: 15px;
+    background: #fafafa;
+    border-radius: 10px;
 }
 
 .user-profile img {
@@ -78,33 +104,166 @@ body {
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+    object-fit: cover;
 }
 
 .user-info {
     flex-grow: 1;
+    overflow: hidden;
+    padding-left: 4px;
 }
 
 .user-info h4 {
     margin: 0;
     font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .user-info p {
     margin: 0;
     font-size: 12px;
-    color: #888;
+    color: #718096;
 }
 
 .logout {
     font-size: 20px;
     cursor: pointer;
     color: #a55c7d;
+    transition: color 0.2s ease, transform 0.2s ease;
+    padding: 4px;
+    display: inline-flex;
 }
 
-.title-navbar{
+.logout:hover {
+    color: #dc3545;
+    transform: translateX(2px);
+}
+
+.title-navbar {
     font-weight: 800;
 }
 
-h3{
+h3 {
     font-weight: 800;
+}
+
+/* Mobile Topbar & Backdrop - Hidden by default on Desktop */
+.admin-mobile-topbar {
+    display: none;
+}
+
+.admin-sidebar-backdrop {
+    display: none;
+}
+
+/* ==========================================================================
+   Responsive Adaptations for Tablets and Mobile (< 992px)
+   ========================================================================== */
+@media (max-width: 991.98px) {
+    body {
+        display: block !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        overflow-x: hidden !important;
+    }
+
+    /* Top bar displayed exclusively on small devices */
+    .admin-mobile-topbar {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        background: #ffffff;
+        padding: 12px 16px;
+        border-bottom: 1px solid #edf2f7;
+        position: sticky;
+        top: 0;
+        z-index: 1025;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .admin-mobile-brand {
+        font-size: 18px;
+        font-weight: 700;
+        color: #a55c7d;
+        letter-spacing: 0.4px;
+    }
+
+    .btn-sidebar-toggle {
+        border: 1px solid #f8c8dc;
+        background: #fdf2f7;
+        color: #a55c7d;
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+
+    .btn-sidebar-toggle:hover,
+    .btn-sidebar-toggle:focus {
+        background: #f8c8dc;
+        color: #873e65;
+    }
+
+    /* Off-canvas Sidebar for Mobile */
+    .sidebar {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        bottom: 0 !important;
+        width: 270px !important;
+        max-width: 85vw !important;
+        height: 100vh !important;
+        z-index: 1050 !important;
+        background: #ffffff !important;
+        box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15) !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        overflow-y: auto !important;
+    }
+
+    .sidebar.show {
+        transform: translateX(0) !important;
+    }
+
+    /* Backdrop Overlay */
+    .admin-sidebar-backdrop {
+        display: block !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background: rgba(15, 23, 42, 0.45) !important;
+        backdrop-filter: blur(3px) !important;
+        z-index: 1040 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transition: opacity 0.3s ease !important;
+    }
+
+    .admin-sidebar-backdrop.show {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+
+    body.admin-sidebar-open {
+        overflow: hidden !important;
+    }
+
+    /* Force .content to occupy 100% on mobile without left margin */
+    .content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        min-width: 0 !important;
+        padding: 16px !important;
+        box-sizing: border-box !important;
+    }
 }
