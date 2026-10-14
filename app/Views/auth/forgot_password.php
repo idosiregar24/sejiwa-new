@@ -31,7 +31,6 @@
         }
         .info-box {
             background-color: #fdf2f7;
-            border-left: 4px solid #b16b8e;
             padding: 14px 18px;
             border-radius: 10px;
             font-size: 14px;
