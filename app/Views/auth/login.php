@@ -60,7 +60,7 @@
                         <input type="checkbox" name="remember">
                         Ingat Saya
                     </label>
-                    <a href="#" class="forgot-password-link">Lupa Kata Sandi?</a>
+                    <a href="<?= base_url('forgot-password') ?>" class="forgot-password-link">Lupa Kata Sandi?</a>
                 </div>
 
                 <!-- Tombol Login -->

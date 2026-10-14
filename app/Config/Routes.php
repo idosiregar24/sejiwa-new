@@ -21,6 +21,15 @@ $routes->post('logout', 'AuthController::logout');
 $routes->get('resendVerification', 'AuthController::resendVerification');
 $routes->post('resendVerification', 'AuthController::resendVerification');
 
+// Routes Lupa Kata Sandi (Forgot Password)
+$routes->get('forgot-password', 'AuthController::forgotPassword');
+$routes->post('forgot-password', 'AuthController::sendResetOtp');
+$routes->get('verify-reset-otp', 'AuthController::verifyResetOtp');
+$routes->post('verify-reset-otp', 'AuthController::processVerifyResetOtp');
+$routes->post('resend-reset-otp', 'AuthController::resendResetOtp');
+$routes->get('reset-password', 'AuthController::resetPassword');
+$routes->post('reset-password', 'AuthController::updatePassword');
+
 //Routes Untuk UserController
 $routes->get('dashboard', 'UserController::dashboard');
 $routes->post('dashboard', 'UserController::dashboard');
